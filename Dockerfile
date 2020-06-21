@@ -42,4 +42,4 @@ RUN cd gcc-obj && make && make install && rm -rf ../gcc-obj && rm -rf ../gcc-9.3
 RUN git clone https://github.com/stevenj/avr-libc3
 RUN cd avr-libc3 && ./bootstrap && ./configure --prefix=/usr/cross --host=avr && make && make install
 RUN mv avr-libc3/include/avr/io /usr/cross/avr/include/avr/ && mv avr-libc3/include/avr/legacyio /usr/cross/avr/include/avr/ \
-    rm -rf avr-libc3
+    && rm -rf avr-libc3
