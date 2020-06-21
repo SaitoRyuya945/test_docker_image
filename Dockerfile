@@ -38,7 +38,7 @@ RUN tar -xvf gcc-9.3.0.tar.xz
 RUN export LDFLAGS="-Wl,-L/root/pkg/lib -Wl,-R/root/pkg/lib" && rm -rf gcc-obj && mkdir gcc-obj && cd gcc-obj \
     && ../gcc-9.3.0/configure --prefix=/usr/cross --with-gmp=/root/pkg --with-mpfr=/root/pkg --with-mpc=/root/pkg \
     --target=avr --disable-nls --enable-languages="c,c++"
-RUN cd gcc-obj && make -j4 && make install && rm -rf ../gcc-obj && rm -rf ../gcc-9.3.0
+RUN cd gcc-obj && make && make install && rm -rf ../gcc-obj && rm -rf ../gcc-9.3.0
 RUN git clone https://github.com/stevenj/avr-libc3
 RUN cd avr-libc3 && ./bootstrap && ./configure --prefix=/usr/cross --host=avr && make && make install
 RUN mv avr-libc3/include/avr/io /usr/cross/avr/include/avr/ && mv avr-libc3/include/avr/legacyio /usr/cross/avr/include/avr/ \
