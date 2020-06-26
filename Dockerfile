@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 
 ENV PATH $PATH:/root/pkg/bin/:root/pkg/sbin
 ENV PATH $PATH:/usr/bin:/usr/sbin/:/usr/cross/bin:/usr/cross/sbin
+ENV PATH $PATH:/root/.rbenv/bin
 ENV SH /bin/bash
 
 RUN apt-get update
@@ -16,6 +17,20 @@ RUN DEBIAN_FRONTEND=nointeractive apt-get -y install libc-dev git bash openssl g
 RUN DEBIAN_FRONTEND=nointeractive apt-get -y install build-essential libncurses-dev
 RUN apt-get install -y autoconf automake libtool autoconf-doc libtool-doc
 RUN pip3 install cmake west requests docopt
+RUN apt-get install -y llvm-9
+RUN apt-get install -y libssl-dev libreadline-dev zlib1g-dev
+
+RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv
+RUN mkdir -p /root/.rbenv/plugins && git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build
+RUN rbenv install 2.7.0 && rbenv global 2.7.0
+RUN wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/PerlIO-gzip-0.20.tar.gz && tar -zxvf PerlIO-gzip-0.2.0.tar.gz
+RUN cd PerlIO-gzip-0.20 && perl Makefile.PL && make && make install
+RUN rm -rf PerlIO-gzip-0.20*
+RUN wget https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/JSON-4.02.tar.gz && tar -zxvf JSON-4.02.tar.gz 
+RUN cd JSON-4.02 && perl Makefile.PL && make && make install 
+RUN rm -rf JSON-4.02*
+RUN git clone https://github.com/linux-test-project/lcov.git ./lcov
+RUN cd lcov && make install && gem install lcoveralls
 
 RUN wget ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2020Q1/pkgsrc-2020Q1.tar.gz
 RUN tar -xvf pkgsrc-2020Q1.tar.gz 
