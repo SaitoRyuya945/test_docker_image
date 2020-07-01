@@ -23,6 +23,8 @@ RUN apt-get install -y libssl-dev libreadline-dev zlib1g-dev
 RUN git clone https://github.com/rbenv/rbenv.git /root/.rbenv
 RUN mkdir -p /root/.rbenv/plugins && git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build
 RUN rbenv install 2.7.0 && rbenv global 2.7.0
+RUN rbenv exec gem install bundler && rbenv exec bundler init
+
 RUN wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/PerlIO-gzip-0.20.tar.gz && tar -zxvf PerlIO-gzip-0.20.tar.gz
 RUN cd PerlIO-gzip-0.20 && perl Makefile.PL && make && make install
 RUN rm -rf PerlIO-gzip-0.20*
