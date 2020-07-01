@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ENV PATH $PATH:/root/pkg/bin/:root/pkg/sbin
 ENV PATH $PATH:/usr/bin:/usr/sbin/:/usr/cross/bin:/usr/cross/sbin
-ENV PATH $PATH:/root/.rbenv/bin
+ENV PATH $PATH:/root/.rbenv/bin:/root/.rbenv/shims
 ENV SH /bin/bash
 
 RUN apt-get update
